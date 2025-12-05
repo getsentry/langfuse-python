@@ -24,6 +24,8 @@ jobs:
           args: check --config ci.ruff.toml
 
   ci:
+    # We don't have the auth/secrets for this fork.
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:

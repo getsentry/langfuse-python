@@ -55,8 +55,11 @@ class EventSerializer(JSONEncoder):
             if np is not None and isinstance(obj, np.generic):
                 return obj.item()
 
-            if isinstance(obj, float) and math.isnan(obj):
-                return None
+            if isinstance(obj, float):
+                if math.isnan(obj):
+                    return None
+                if math.isinf(obj):
+                    return str(obj)
 
             if isinstance(obj, (Exception, KeyboardInterrupt)):
                 return f"{type(obj).__name__}: {str(obj)}"
